@@ -6,6 +6,7 @@
 }
 
 .card {
+  background: #ffffff;
   text-decoration: none;
   text-align: var(--text-alignment);
 }
@@ -106,7 +107,9 @@
 
 .card__media {
   margin: var(--image-padding);
-  width: calc(100% - 2 * var(--image-padding));
+  width: 100%;
+  height: 100%;
+  
 }
 
 .card--standard .card__media {
@@ -135,8 +138,13 @@
 }
 
 .card__information {
-  grid-row-start: 2;
-  padding: 1.3rem 1rem;
+  font-family: "Beatrice", serif; 
+  font-weight: 700;               
+  font-size: 14px;                
+  line-height: 1;                 
+  letter-spacing: 0.24em;        
+  text-transform: uppercase;      
+  color: #1F727C;   
 }
 
 .card:not(.ratio) > .card__content {
@@ -146,7 +154,7 @@
 .card-information .card__information-volume-pricing-note {
   margin-top: 0.6rem;
   line-height: calc(0.5 + 0.4 / var(--font-body-scale));
-  color: rgba(var(--color-foreground), 0.75);
+  color: #1F727C;
 }
 
 .card__information-volume-pricing-note--button,
@@ -214,9 +222,35 @@
 }
 
 @media screen and (max-width: 749px) {
+
+  .card__heading {
+    font-family: "Beatrice", serif;
+    font-weight: 700;
+    font-size: 10px !important;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+
+  .card-information > .price {
+    font-family: "Beatrice", serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+}
+
+
+@media screen and (max-width: 749px) {
   .grid--2-col-tablet-down .card__content quick-add-bulk .quantity__button {
     width: calc(3.5rem / var(--font-body-scale));
   }
+
+  
 
   .grid--2-col-tablet-down
     .card--card
@@ -301,6 +335,13 @@
 }
 
 .card__heading {
+  line-height: 1;
+  color: #1F727C;
+  font-family: "Beatrice", serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -401,11 +442,8 @@
     transform: scale(1.03);
   }
 
-  .underline-links-hover:hover a {
-    text-decoration: underline;
-    text-underline-offset: 0.3rem;
-  }
-}
+  
+} 
 
 .card--standard.card--media .card__inner .card__information,
 .card--standard.card--text:not(.card--horizontal) > .card__content .card__heading:not(.card__heading--placeholder),
@@ -470,8 +508,13 @@
 }
 
 .card-information > * {
-  line-height: calc(1 + 0.4 / var(--font-body-scale));
-  color: rgb(var(--color-foreground));
+  line-height: 1;
+  color: #1F727C;
+  font-family: "Beatrice", serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
 }
 
 .card-information > .price {
@@ -593,3 +636,83 @@
     clip-path: polygon(var(--shape--blob-5));
   }
 }
+
+.card__media {
+  position: relative;
+}
+
+.badge-new {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #0091DA;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+.card__inner {
+  position: relative; 
+}
+
+.product-card-interaction {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.product-dots {
+  width: 32px;
+  height: 32px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.dots-circle { display: flex; gap: 2px; }
+.dot { width: 4px; height: 4px; background: #000; border-radius: 50%; }
+
+/* Кнопка Shop Now - початковий стан (схована зліва) */
+.shop-now-slide-button {
+  display: none; 
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  
+  transform: translateX(-20px);
+  opacity: 0;
+  transition: all 0.4s ease-out;
+}
+
+.shop-now-slide-button.is-active {
+  display: block;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media screen and (max-width: 749px) {
+  .product-dots {
+    display: flex;
+    opacity: 1;    
+  }
+
+  .shop-now-slide-button {
+    display: none !important;
+  }
+}
+
