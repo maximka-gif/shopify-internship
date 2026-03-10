@@ -87,16 +87,11 @@
 
           <div class="product-card-interaction">
             {%- if card_product.url != blank -%}
-              <div class="product-dots" onclick="toggleShopButton(this, event)">
-                <div class="dots-circle">
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
+              <a href="{{ card_product.url }}" class="shop-now-expand-button">
+                <div class="dots-icon">
+                  <span></span><span></span><span></span>
                 </div>
-              </div>
-          
-              <a href="{{ card_product.url }}" class="shop-now-slide-button">
-                <span>Shop now</span>
+                <span class="shop-now-text">Shop now</span>
               </a>
             {%- endif -%}
           </div>
@@ -208,7 +203,7 @@
             {%- for option in card_product.options_with_values -%}
               {%- assign option_name_downcase = option.name | downcase -%}
               {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
-                <div class="card-color-swatches" style="display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap;">
+                <div class="card-color-swatches">
                   {%- for value in option.values -%}
                     {%- assign variant_image_url = blank -%}
                     {%- for variant in card_product.variants -%}
@@ -222,16 +217,7 @@
 
                     <label
                       class="color-swatch-dot"
-                      style="
-                        width: 16px;
-                        height: 16px;
-                        border-radius: 50%;
-                        background-color: {{ value | split: ' ' | last | handle }};
-                        border: 1px solid #ddd;
-                        cursor: pointer;
-                        position: relative;
-                        z-index: 3;
-                      "
+                      style="background-color: {{ value | split: ' ' | last | handle }};"
                       title="{{ value }}"
                       data-image="{{ variant_image_url }}"
                       onclick="changeCardImage(this)"
@@ -676,11 +662,20 @@
     }
   }
   function toggleShopButton(dotElement, event) {
+    // Зупиняємо стандартну дію і не даємо кліку "провалитися" на посилання картки
     event.preventDefault(); 
+    event.stopPropagation(); 
+    
     const container = dotElement.closest('.product-card-interaction');
     const button = container.querySelector('.shop-now-slide-button');
     
+    // Якщо це мобільний телефон (ширина екрану 749px або менше) - переходимо на товар
+    if (window.innerWidth <= 749) {
+      window.location.href = button.getAttribute('href');
+      return;
+    }
+    
+    // Якщо це комп'ютер - просто показуємо/ховаємо кнопку
     button.classList.toggle('is-active');
-    dotElement.style.display = 'none';
   }
 </script>

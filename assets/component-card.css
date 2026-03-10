@@ -660,59 +660,111 @@
 
 .product-card-interaction {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
-  display: flex;
-  align-items: center;
-  z-index: 10;
-}
-
-.product-dots {
-  width: 32px;
-  height: 32px;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.dots-circle { display: flex; gap: 2px; }
-.dot { width: 4px; height: 4px; background: #000; border-radius: 50%; }
-
-/* Кнопка Shop Now - початковий стан (схована зліва) */
-.shop-now-slide-button {
-  display: none; 
-  background: #fff;
-  color: #000;
-  text-decoration: none;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  
-  transform: translateX(-20px);
+  bottom: 15px; 
+  right: 15px;  
+  z-index: 10 !important;
   opacity: 0;
-  transition: all 0.4s ease-out;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
 }
 
-.shop-now-slide-button.is-active {
-  display: block;
-  transform: translateX(0);
+.card-wrapper:hover .product-card-interaction,
+.card:hover .product-card-interaction {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.shop-now-expand-button {
+  display: flex !important;
+  align-items: center !important;
+  background-color: #ffffff !important;
+  height: 38px !important;
+  width: 38px !important; 
+  border-radius: 20px !important;
+  overflow: hidden !important; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+}
+
+.shop-now-expand-button:hover {
+  width: 140px !important; 
+  background-color: #000000 !important;
+}
+
+.dots-icon {
+  display: flex !important;
+  gap: 3px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-width: 38px !important; 
+  height: 38px !important;
+}
+
+.dots-icon span {
+  width: 4px !important;
+  height: 4px !important;
+  background-color: #000000 !important;
+  border-radius: 50% !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.shop-now-expand-button:hover .dots-icon span {
+  background-color: #ffffff !important;
+}
+
+.shop-now-text {
+  font-family: inherit !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  color: #ffffff !important; 
+  opacity: 0 !important;
+  transform: translateX(-10px);
+  transition: all 0.35s ease !important;
+  pointer-events: none;
+}
+
+.shop-now-expand-button:hover .shop-now-text {
+  opacity: 1 !important;
+  transform: translateX(0); 
+  margin-left: 5px !important; 
 }
 
 @media screen and (max-width: 749px) {
-  .product-dots {
-    display: flex;
-    opacity: 1;    
-  }
-
-  .shop-now-slide-button {
-    display: none !important;
+  .product-card-interaction {
+    display: none !important; 
   }
 }
 
+.card-color-swatches {
+  display: flex;
+  gap: 8px; 
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.color-swatch-dot {
+  width: 20px; 
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+}
+
+.color-swatch-dot:hover {
+  transform: scale(1.15); 
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #000; 
+}
+
+.color-swatch-dot:active {
+  transform: scale(0.95);
+}
