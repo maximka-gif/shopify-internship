@@ -74,14 +74,72 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__inner-container {
   position: relative;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-drawer__navigation-container {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  align-content: space-between;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   overflow-y: auto;
-  height: 100%;
+}
+
+.menu-drawer__search {
+  padding: 1.5rem 3rem;
+  position: relative;
+}
+.menu-drawer__search::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 2px dashed #4cb3b7;
+}
+
+.menu-drawer__search .field {
+  display: flex;
+  align-items: center;
+}
+.menu-drawer__search .field::after,
+.menu-drawer__search .field::before {
+  display: none !important;
+}
+.menu-drawer__search .field__label {
+  display: none;
+}
+
+.menu-drawer__search .search__input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  padding: 0;
+  box-shadow: none;
+  font-size: 1.6rem;
+  height: auto;
+  min-height: auto;
+}
+.menu-drawer__search .search__input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.menu-drawer__search .search__button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  margin-right: 1.5rem;
+  color: #176066;
+  min-width: unset;
+  min-height: unset;
+  position: static;
+}
+.menu-drawer__search .search__button .svg-wrapper {
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .menu-drawer__navigation {
@@ -95,13 +153,45 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .js .menu-drawer__menu li {
-  margin-bottom: 0.2rem;
+  margin-bottom: 0;
 }
 
 .menu-drawer__menu-item {
-  padding: 1.1rem 3rem;
+  padding: 1.5rem 3rem;
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
+  position: relative;
+}
+
+.menu-drawer__menu > li > .menu-drawer__menu-item::after,
+.menu-drawer__menu > li > details > .menu-drawer__menu-item::after,
+.menu-drawer__submenu .menu-drawer__menu > li > .menu-drawer__menu-item::after,
+.menu-drawer__submenu .menu-drawer__menu > li > details > .menu-drawer__menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3rem;
+  right: 3rem;
+  border-bottom: 1px solid #cae4e5;
+}
+
+.menu-drawer__menu > li:last-child > .menu-drawer__menu-item::after,
+.menu-drawer__menu > li:last-child > details > .menu-drawer__menu-item::after,
+.menu-drawer__submenu .menu-drawer__menu > li:last-child > .menu-drawer__menu-item::after,
+.menu-drawer__submenu .menu-drawer__menu > li:last-child > details > .menu-drawer__menu-item::after {
+  display: none;
+}
+
+.menu-drawer__menu > li > details > summary.menu-drawer__menu-item,
+.menu-drawer__menu > li > a.menu-drawer__menu-item {
+  color: #176066;
+}
+
+.menu-drawer__submenu .menu-drawer__menu-item {
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #176066;
 }
 
 .menu-drawer summary.menu-drawer__menu-item {
@@ -113,8 +203,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__close-button:focus,
 .menu-drawer__menu-item:hover,
 .menu-drawer__close-button:hover {
-  color: rgb(var(--color-foreground));
-  background-color: rgba(var(--color-foreground), 0.04);
+  color: #1a5b66;
 }
 
 .menu-drawer__menu-item--active:hover {
@@ -151,7 +240,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__close-button {
   margin-top: 1.5rem;
-  padding: 1.2rem 2.6rem 1.2rem 3rem;
+  padding: 1.5rem 2.6rem 1.5rem 3rem;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -161,54 +250,73 @@ details[open].menu-opening > .menu-drawer__submenu {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   text-align: left;
+  color: #176066;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.1em;
 }
 
 .menu-drawer__close-button .svg-wrapper {
   transform: rotate(180deg);
-  margin-right: 1rem;
-  width: 15px;
+  margin-right: 1.5rem;
+  width: 1.5rem;
+  color: #176066;
+}
+
+.menu-drawer__submenu-title {
+  padding: 0.5rem 3rem 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1a5b66;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.menu-drawer__submenu-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3rem;
+  right: 3rem;
+  border-bottom: 1px solid #cae4e5;
 }
 
 .menu-drawer__utility-links {
-  padding: 0;
-  background-color: rgba(var(--color-foreground), 0.03);
+  padding: 2rem 3rem;
+  background-color: #176066;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: auto;
 }
 
 .header--has-social .menu-drawer__utility-links {
   padding: 2rem 3rem;
 }
 
-@media screen and (max-width: 749px) {
-  .header--has-account:where(:not(.header--has-social):not(.header--has-localizations)) .menu-drawer__utility-links {
-    padding: 2rem 3rem;
-  }
-}
-
-@media screen and (max-width: 989px) {
-  .header--has-localizations:where(:not(.header--has-social)) .menu-drawer__utility-links {
-    padding: 2rem 3rem;
-  }
-}
-
 .menu-drawer__account {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  padding: 1rem 0;
+  padding: 0;
   font-size: 1.4rem;
-  color: rgb(var(--color-foreground));
+  color: #ffffff;
   margin-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .menu-drawer__utility-links:has(.menu-drawer__localization) .menu-drawer__account {
   margin: 0;
 }
 
-.menu-drawer__account account-icon > .svg-wrapper {
-  height: 2rem;
-  width: 2rem;
-  margin-right: 1rem;
+.menu-drawer__account account-icon > .svg-wrapper,
+.menu-drawer__account > .svg-wrapper {
+  height: 2.2rem;
+  width: 2.2rem;
+  margin-right: 1.5rem;
+  color: #ffffff;
 }
 
 .menu-drawer__account shop-user-avatar {
@@ -217,7 +325,8 @@ details[open].menu-opening > .menu-drawer__submenu {
   margin-left: -0.45rem;
 }
 
-.menu-drawer__account:hover account-icon > .svg-wrapper {
+.menu-drawer__account:hover account-icon > .svg-wrapper,
+.menu-drawer__account:hover > .svg-wrapper {
   transform: scale(1.07);
 }
 

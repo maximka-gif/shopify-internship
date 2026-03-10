@@ -1,0 +1,226 @@
+{%- style -%}
+    .promo-banner-{{ section.id }} {
+      background: {{ section.settings.bg_color }};
+      position: relative;
+      overflow: hidden;
+      color: {{ section.settings.text_color }};
+      padding: 60px 10%;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    .banner-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};
+    }
+
+    .promo-flex-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      gap: 40px;
+    }
+
+    .promo-text-side {
+      flex: 1;
+      text-align: left;
+    }
+
+    .promo-text-side h2 {
+      color: {{ section.settings.text_color }};
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .promo-text-side p {
+      font-size: 34px;
+      font-weight: 300;
+      margin-bottom: 30px;
+    }
+
+    .promo-btn {
+      display: inline-block;
+      background-color: #FF8674;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 15px 45px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .promo-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 134, 116, 0.4);
+    }
+
+    .promo-timer-side {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .countdown-timer {
+      display: flex;
+      gap: 30px;
+    }
+
+    .timer-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: transparent; 
+      border: none; 
+      padding: 0;
+      min-width: 70px;
+    }
+
+    .timer-num {
+      font-size: 5rem; 
+      font-weight: 700;
+      line-height: 1;
+      color: {{ section.settings.text_color }};
+    }
+
+    .timer-label {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      margin-top: 8px;
+      opacity: 0.8;
+    }
+
+    @media screen and (max-width: 989px) {
+      .promo-flex-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+      }
+      .promo-text-side {
+        text-align: center;
+      }
+      .promo-timer-side {
+        justify-content: center;
+      }
+      .promo-text-side h2 {
+        font-size: 3.5rem;
+      }
+    }
+{%- endstyle -%}
+
+<div class="promo-banner-{{ section.id }}">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'banner-bg-img' }}
+  {%- endif -%}
+
+  <div class="promo-flex-container">
+    <div class="promo-text-side">
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.subheading }}</p>
+
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="promo-btn">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="promo-timer-side">
+      <div class="countdown-timer" id="timer-{{ section.id }}">
+        <div class="timer-block">
+          <span class="timer-num" id="days-{{ section.id }}">00</span>
+          <span class="timer-label">Day</span>
+        </div>
+        <div class="timer-block">
+          <span class="timer-num" id="hours-{{ section.id }}">00</span>
+          <span class="timer-label">Hour</span>
+        </div>
+        <div class="timer-block">
+          <span class="timer-num" id="mins-{{ section.id }}">00</span>
+          <span class="timer-label">Min</span>
+        </div>
+        <div class="timer-block">
+          <span class="timer-num" id="secs-{{ section.id }}">00</span>
+          <span class="timer-label">Sec</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+    const countDown = new Date('{{ section.settings.end_date }}').getTime();
+
+    const x = setInterval(function () {
+      const now = new Date().getTime(),
+        distance = countDown - now;
+
+      if (distance < 0) {
+        clearInterval(x);
+        return;
+      }
+
+      const d = document.getElementById('days-{{ section.id }}');
+      const h = document.getElementById('hours-{{ section.id }}');
+      const m = document.getElementById('mins-{{ section.id }}');
+      const s = document.getElementById('secs-{{ section.id }}');
+
+      if (d) d.innerText = Math.floor(distance / day);
+      if (h) h.innerText = Math.floor((distance % day) / hour);
+      if (m) m.innerText = Math.floor((distance % hour) / minute);
+      if (s) s.innerText = Math.floor((distance % minute) / second);
+    }, 1000);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Promo Countdown Flex",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Фонове зображення" },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Прозорість фото",
+      "default": 100
+    },
+    { "type": "text", "id": "heading", "label": "Заголовок", "default": "LIMITED TIME OFFER" },
+    { "type": "text", "id": "subheading", "label": "Підзаголовок", "default": "Get 50% off on all new arrivals" },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "Дата (Напр: Dec 31, 2026 23:59:59)",
+      "default": "Dec 31, 2026 23:59:59"
+    },
+    { "type": "text", "id": "button_label", "label": "Текст кнопки", "default": "SHOP NOW" },
+    { "type": "url", "id": "button_link", "label": "Посилання кнопки" },
+    { "type": "color", "id": "bg_color", "label": "Колір фону", "default": "#1F727C" },
+    { "type": "color", "id": "text_color", "label": "Колір тексту", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "Promo Countdown Flex" }]
+}
+{% endschema %}

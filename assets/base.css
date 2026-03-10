@@ -1316,6 +1316,26 @@ button.shopify-payment-button__button--unbranded {
   padding: 1.2rem 2.6rem;
 }
 
+.collection__view-link {
+  font-family: "Cambon", serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: capitalize;
+
+  color: #1F727C;
+  text-decoration: underline;
+
+  background: none;
+  padding: 0;
+}
+
+.collection__view-link:hover {
+  opacity: 0.7;
+}
+
+
 /* Shopify Accelerated Checkout */
 
 shopify-accelerated-checkout {
@@ -3594,4 +3614,16 @@ details-disclosure > details {
   100% {
     transform: translateX(100%) scaleX(0);
   }
+}
+:root {
+  --font-body-family: "Almarai", sans-serif !important;
+  --font-heading-family: "Almarai", sans-serif !important;
+}
+
+body, p, a, span, div, li, h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5, .button, .full-unstyled-link {
+  font-family: "Almarai", sans-serif !important;
+}
+
+.card__heading, .card__information, .price, .card-information {
+  font-family: "Almarai", sans-serif !important;
 }

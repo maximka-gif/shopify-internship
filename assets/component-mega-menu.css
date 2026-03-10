@@ -14,6 +14,7 @@
   position: absolute;
   right: 0;
   top: 100%;
+  color: #176066;
 }
 
 .shopify-section-header-sticky .mega-menu__content {
@@ -41,6 +42,20 @@
   list-style: none;
 }
 
+.mega-menu__list__child {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mega-menu-title-gap, 12px); 
+  list-style: none;
+}
+
+.mega-menu__list__child-of-child {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mega-menu-items-gap, 4px);
+  list-style: none;
+}
+
 .mega-menu__link {
   color: rgba(var(--color-foreground), 0.75);
   display: block;
@@ -50,6 +65,7 @@
   text-decoration: none;
   transition: text-decoration var(--duration-short) ease;
   word-wrap: break-word;
+    color: #1F727C;
 }
 
 .mega-menu__link--level-2 {
@@ -70,8 +86,7 @@
 
 .mega-menu__link:hover,
 .mega-menu__link--active {
-  color: rgb(var(--color-foreground));
-  text-decoration: underline;
+  color: #1F727C;
 }
 
 .mega-menu__link--active:hover {
